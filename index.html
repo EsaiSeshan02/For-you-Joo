@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>For you 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=DM+Sans:wght@400;500;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f9d6df;--card:#fffafb;--ink:#7a0f2e;--soft:#a65a72;--acc:#a8153f;
+  --line:#e8bccb;--chip:#f5dde5;--paper:#fff7e8;color-scheme:light;
+}
+@media(prefers-color-scheme:dark){:root{--bg:#2a0d17;--card:#3a1422;--ink:#ffd9e3;--soft:#d79bb0;--acc:#ff6b8f;--line:#6b2b42;--chip:#4a1b2d;--paper:#4a2a2f;color-scheme:dark}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font:16px/1.5 "DM Sans",system-ui,sans-serif;overflow-x:hidden}
+button{font:inherit;cursor:pointer;border:0}
+h1,h2,h3{margin:0;line-height:1.1;font-family:Fraunces,Georgia,serif;font-weight:800}
+h1,h2{text-align:center}h2{font-size:1.9rem}
+main{width:min(520px,100%);margin:auto;padding:16px 14px 50px;display:flex;flex-direction:column;gap:18px}
+.card{position:relative;background:var(--card);border-radius:28px;padding:28px 20px;text-align:center;box-shadow:0 8px 30px rgba(168,21,63,.12)}
+.sub{color:var(--soft);margin:8px 0 18px}
+.chip{display:inline-block;padding:8px 18px;border:1px solid var(--line);border-radius:999px;background:var(--chip);color:var(--ink);font-weight:700}
+.hero{padding:56px 20px}.hero-icon{font-size:2.4rem}.hero h1{margin-top:6px;font-size:2.8rem}
+.hero .script{margin-top:10px;color:var(--soft);font-family:"Dancing Script",cursive;font-size:1.6rem}
+.cta{width:100%;padding:15px 28px;border-radius:999px;background:linear-gradient(135deg,var(--acc),#6f0d2a);color:#fff;font-size:1.1rem;font-weight:700;box-shadow:0 8px 18px rgba(168,21,63,.3)}
+.cta:disabled{opacity:.6;cursor:not-allowed}
+.time-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.time-cell{padding:14px 4px;border-radius:18px;border-bottom:4px solid var(--acc);background:var(--chip)}
+.time-cell b{display:block;font:800 1.9rem Fraunces,serif}.time-cell span{color:var(--soft);font-size:.75rem;text-transform:uppercase;letter-spacing:.04em}
+.reason{display:flex;align-items:center;gap:12px;margin-bottom:10px;padding:14px;border-radius:20px;background:var(--chip);text-align:left}
+.reason:last-child{margin-bottom:0}.reason-icon{flex:0 0 auto;font-size:1.6rem}
+.gallery-frame{position:relative}.gallery{padding:10px 10px 14px;border-radius:18px;background:var(--paper);transform:rotate(-1deg);box-shadow:0 8px 20px rgba(0,0,0,.12)}
+.gallery-photo{display:grid;place-items:center;aspect-ratio:4/5;padding:20px;border-radius:12px;background:var(--chip) center/cover;color:var(--soft)}
+.gallery-nav{position:absolute;top:42%;width:44px;height:44px;border-radius:50%;background:var(--card);color:var(--acc);font-size:1.3rem;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+.gallery-caption{min-height:1.6em;margin-top:10px;font-family:"Dancing Script",cursive;font-size:1.5rem}
+.thumbs{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:16px}
+.thumb{width:52px;height:60px;border:3px solid transparent;border-radius:12px;background:var(--chip) center/cover}.thumb.active{border-color:var(--acc)}
+.song-list{display:flex;flex-direction:column;gap:10px;text-align:left}
+.song{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:18px;background:var(--chip);box-shadow:0 4px 12px rgba(168,21,63,.07)}
+.song-disc{display:grid;place-items:center;flex:0 0 auto;width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at center,#f5dde5 0 14%,#8c0f33 15% 34%,#4b071b 35% 62%,#8c0f33 63% 100%);color:#fff;font-size:.8rem;box-shadow:0 3px 8px rgba(0,0,0,.18)}
+.song-info{min-width:0;flex:1}.song-title{overflow:hidden;font-weight:700;white-space:nowrap;text-overflow:ellipsis}.song-artist{color:var(--soft);font-size:.82rem}
+.song-play{display:grid;place-items:center;width:40px;height:40px;flex:0 0 auto;border-radius:50%;background:var(--acc);color:#fff}
+.scratch-card{position:relative;display:grid;place-items:center;aspect-ratio:4/5;overflow:hidden;border-radius:20px;background:var(--chip) center/cover}
+.scratch-card canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;transition:opacity .8s}
+.envelope{position:relative;width:240px;height:160px;margin:6px auto 16px;border-radius:10px;background:#f0c9d5;box-shadow:0 14px 26px rgba(168,21,63,.25);cursor:pointer}
+.envelope:before{content:"";position:absolute;inset:0;border-radius:10px;background:linear-gradient(to top right,transparent 49%,#e7b0c1 50%) left/50% 100% no-repeat,linear-gradient(to top left,transparent 49%,#e7b0c1 50%) right/50% 100% no-repeat}
+.envelope:after{content:"";position:absolute;left:0;right:0;top:0;height:60%;border-radius:10px 10px 0 0;background:var(--acc);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .5s}
+.envelope.open:after{transform:rotateX(180deg)}
+.seal{position:absolute;left:50%;top:48%;z-index:2;display:grid;place-items:center;width:50px;height:50px;transform:translate(-50%,-50%);border:3px solid #f5dde5;border-radius:50%;background:#8c0f33;color:#fff;font:800 1.4rem Fraunces,serif}
+.letter{margin-bottom:14px;padding:22px;border-radius:12px;background:var(--paper);text-align:left;font:1.35rem/1.6 "Dancing Script",cursive;white-space:pre-wrap;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.wheel-wrap{position:relative;width:min(320px,100%);margin:0 auto 20px}.wheel-wrap canvas{display:block;width:100%;border-radius:50%;box-shadow:0 10px 24px rgba(168,21,63,.3);transition:transform 4.2s cubic-bezier(.12,.7,.1,1)}
+.wheel-pin{position:absolute;left:50%;top:-12px;z-index:2;transform:translateX(-50%);font-size:2rem;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
+.modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(40,0,15,.6)}
+.modal.show{display:flex}.modal-sheet{width:100%;max-width:460px;max-height:80vh;overflow:auto;padding:24px;border-radius:24px;background:var(--card);text-align:center}
+.heart{position:fixed;top:-30px;z-index:1;pointer-events:none;opacity:.6;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(40deg)}}
+@media(prefers-reduced-motion:reduce){.heart{display:none}.wheel-wrap canvas{transition-duration:.01s}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+
+<div class="modal" id="letterModal">
+  <div class="modal-sheet">
+    <div id="letterBody"></div>
+    <button class="cta" id="closeLetter">Close</button>
+  </div>
+</div>
+
+<div class="modal" id="resultModal">
+  <div class="modal-sheet">
+    <div style="font-size:3rem">🎁</div>
+    <h2 id="resultTitle" style="margin:10px 0 18px"></h2>
+    <button class="cta" id="closeResult">Yay</button>
+  </div>
+</div>
+
+<script>
+const DEFAULTS={
+  to:"Joo",
+  from:"Dimple",
+  date:"2026-05-08",
+  tag:"Since our first time we met in BSurg ward",
+  reasons:[
+    "The way you explain things to me and tell me about your day to me.",
+    "The way you help me in everything.",
+    "When you remember the things I said or when u remember my everything.",
+    "When you send me moneyyy.",
+    "You make me feel comfortable with you.",
+    "Its you."
+  ],
+  photos:["image1.jpeg","image2.jpeg","image3.jpeg","image4.jpeg","image5.jpeg","image6.jpeg"],
+  captions:[
+    "The day the car died and we didn't care",
+    "Our favourite lazy Sunday",
+    "A favourite memory of us"
+  ],
+  songs:["Lover - Taylor Swift","Perfect - Ed Sheeran","Aarzu - Unknown"],
+  scratch:"scratch.jpeg",
+  scratchTitle:"Scratch to see my favourite night",
+  letters:"Joo,\n\nIts been more than a month we both knew eachother we heard our names,or we met eachother but that bsurg duty changed our perspectives of eachother or changed our bond.. meeting eachother, going out outside, waiting for eachother, meeting eachother after a tired day.. its all are special... thankss for coming in my life and making it beautiful like you.\nLovee you.\n\nYours,\nDimple",
+  wheel:[
+    "Will go for a movie",
+    "Will ignore you for a day",
+    "Buy me a hotwheels",
+    "Get me RCB jersey",
+    "Plan a dayout",
+    "Normal day only",
+    "Something special"
+  ]
+};
+
+let state=JSON.parse(JSON.stringify(DEFAULTS));
+let galleryIndex=0,wheelRotation=0,wheelSpinning=false,counterTimer;
+
+const escapeHTML=value=>String(value).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function renderPage(){
+  const photos=state.photos||[], currentPhoto=photos[galleryIndex]||"";
+  const reasons=state.reasons||[], songs=state.songs||[], prizes=state.wheel||[];
+
+  document.getElementById("app").innerHTML=`
+  <section class="card hero"><div class="hero-icon">💖</div><h1>For ${escapeHTML(state.to)}</h1><div class="script">${escapeHTML(state.tag)}</div></section>
+
+  <section class="card">
+    <span class="chip">💞 Since ${state.date?new Date(state.date+"T00:00").toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"}):"..."}</span>
+    <h2 style="margin-top:16px">Time together</h2><p class="sub">${escapeHTML(state.tag)}</p>
+    <div class="time-grid" id="timeCounter"></div>
+    <p class="chip" id="totalDays" style="margin-top:16px"></p>
+  </section>
+
+  <section class="card">
+    <h2>Things I love about you</h2><p class="sub">The short version. The long one would not fit.</p>
+    ${reasons.map((reason,i)=>`<div class="reason"><span class="reason-icon">${["🌹","❤️","💕","✨","🥰","💘"][i%6]}</span><span>${escapeHTML(reason)}</span></div>`).join("")}
+  </section>
+
+  <section class="card">
+    <h2>A few of my favourite us</h2><p class="sub">${photos.length?`${galleryIndex+1} / ${photos.length}`:""}</p>
+    <div class="gallery-frame"><div class="gallery">
+      <div class="gallery-photo" style="${currentPhoto?`background-image:url(${currentPhoto})`:""}">${currentPhoto?"":"No photos available"}</div>
+      ${photos.length>1?`<button class="gallery-nav" style="left:-8px" id="previousPhoto">‹</button><button class="gallery-nav" style="right:-8px" id="nextPhoto">›</button>`:""}
+      <div class="gallery-caption">${escapeHTML(state.captions?.[galleryIndex]||"")}</div>
+    </div></div>
+    <div class="thumbs">${photos.map((photo,i)=>`<button class="thumb ${i===galleryIndex?"active":""}" style="background-image:url(${photo})" data-photo-index="${i}" aria-label="Photo ${i+1}"></button>`).join("")}</div>
+  </section>
+
+  <section class="card">
+    <h2>Our songs 🎵</h2><p class="sub">Songs that remind me of us.</p>
+    <div class="song-list">${songs.map(song=>{
+      const parts=song.split(/\s+-\s+/,2),title=parts[0]||song,artist=parts[1]||"";
+      return `<div class="song"><div class="song-disc">♪</div><div class="song-info"><div class="song-title">${escapeHTML(title)}</div><div class="song-artist">${escapeHTML(artist)}</div></div><button class="song-play" data-song="${encodeURIComponent(song)}">▶</button></div>`;
+    }).join("")}</div>
+  </section>
+
+  <section class="card">
+    <h2>${escapeHTML(state.scratchTitle)}</h2><p class="sub">Use your finger to scratch the card.</p>
+    <div class="scratch-card" id="scratchCard" style="${state.scratch?`background-image:url(${state.scratch})`:""}">${state.scratch?"":"No scratch photo available"}<canvas id="scratchCanvas"></canvas></div>
+    <p class="sub" id="scratchMessage" style="margin:12px 0 0"></p>
+  </section>
+
+  <section class="card">
+    <h2>A letter for you</h2><p class="sub">Tap the envelope to open.</p>
+    <div class="envelope" id="envelope"><div class="seal">${escapeHTML((state.from||"D")[0].toUpperCase())}</div></div>
+    <span class="chip" id="openLetter" style="cursor:pointer">✉️ Tap to open</span>
+  </section>
+
+  <section class="card">
+    <h2>Spin for your anniversary gift</h2><p class="sub">${prizes.length} things could happen next</p>
+    <div class="wheel-wrap"><div class="wheel-pin">📍</div><canvas id="giftWheel" width="640" height="640"></canvas></div>
+    <button class="cta" id="spinWheel">Spin the wheel</button>
+  </section>
+
+  <section class="card">
+    <p style="font-family:'Dancing Script',cursive;font-size:1.7rem;margin:0">Forever yours,</p>
+    <h2 style="margin-top:6px">${escapeHTML(state.from)}</h2>
+  </section>`;
+  bindPageEvents();updateCounter();drawWheel();initializeScratchCard();
+}
+
+function bindPageEvents(){
+  const photos=state.photos||[],total=photos.length;
+  const previous=document.getElementById("previousPhoto"),next=document.getElementById("nextPhoto");
+  if(previous)previous.onclick=()=>{galleryIndex=(galleryIndex-1+total)%total;renderPage()};
+  if(next)next.onclick=()=>{galleryIndex=(galleryIndex+1)%total;renderPage()};
+  document.querySelectorAll(".thumb").forEach(b=>b.onclick=()=>{galleryIndex=Number(b.dataset.photoIndex);renderPage()});
+
+  const gallery=document.querySelector(".gallery");let touchStartX=null;
+  if(gallery){
+    gallery.ontouchstart=e=>touchStartX=e.touches[0].clientX;
+    gallery.ontouchend=e=>{
+      if(touchStartX===null||total<2)return;
+      const d=e.changedTouches[0].clientX-touchStartX;
+      if(Math.abs(d)>50){galleryIndex=(galleryIndex+(d<0?1:total-1))%total;renderPage()}
+      touchStartX=null;
+    };
+  }
+
+  document.querySelectorAll(".song-play").forEach(b=>b.onclick=()=>window.open(`https://www.youtube.com/results?search_query=${b.dataset.song}`,"_blank","noopener,noreferrer"));
+
+  const openEnvelope=()=>{
+    document.getElementById("envelope").classList.add("open");
+    const letters=String(state.letters||"").split(/^\s*---\s*$/m).map(x=>x.trim()).filter(Boolean);
+    document.getElementById("letterBody").innerHTML=(letters.length?letters:["Nothing here yet."]).map(x=>`<div class="letter">${escapeHTML(x)}</div>`).join("");
+    setTimeout(()=>{document.getElementById("letterModal").classList.add("show");document.getElementById("envelope").classList.remove("open")},500);
+  };
+  document.getElementById("envelope").onclick=openEnvelope;
+  document.getElementById("openLetter").onclick=openEnvelope;
+  document.getElementById("spinWheel").onclick=spinWheel;
+}
+
+function updateCounter(){
+  clearInterval(counterTimer);
+  const update=()=>{
+    const box=document.getElementById("timeCounter");if(!state.date||!box)return;
+    const start=new Date(state.date+"T00:00"),now=new Date();
+    if(Number.isNaN(start.getTime())||start>now){box.innerHTML="";return}
+    let years=now.getFullYear()-start.getFullYear(),months=now.getMonth()-start.getMonth(),days=now.getDate()-start.getDate();
+    if(days<0){months--;days+=new Date(now.getFullYear(),now.getMonth(),0).getDate()}
+    if(months<0){years--;months+=12}
+    const values=[["Years",years],["Months",months],["Days",days],["Hours",now.getHours()],["Minutes",now.getMinutes()],["Seconds",now.getSeconds()]];
+    box.innerHTML=values.map(([label,value])=>`<div class="time-cell"><b>${String(value).padStart(2,"0")}</b><span>${label}</span></div>`).join("");
+    document.getElementById("totalDays").textContent="📅 "+Math.floor((now-start)/864e5).toLocaleString()+" days together";
+  };
+  update();counterTimer=setInterval(update,1000);
+}
+
+const WHEEL_COLORS=["#a8153f","#c23a5e","#8c1f3d","#d4607f","#b0305a","#7a1030","#e08aa3","#9d2448","#cf4a6c","#6f0d2a","#bf6b86","#a12b52"];
+
+function drawWheel(){
+  const canvas=document.getElementById("giftWheel");if(!canvas)return;
+  const ctx=canvas.getContext("2d"),prizes=state.wheel.length>1?state.wheel.slice(0,12):["Add","prizes"],n=prizes.length,a=2*Math.PI/n,c=320,r=320;
+  ctx.clearRect(0,0,640,640);
+  prizes.forEach((prize,i)=>{
+    const start=-Math.PI/2+i*a;ctx.beginPath();ctx.moveTo(c,c);ctx.arc(c,c,r-4,start,start+a);ctx.closePath();
+    ctx.fillStyle=WHEEL_COLORS[i%WHEEL_COLORS.length];ctx.fill();ctx.strokeStyle="#fff";ctx.lineWidth=4;ctx.stroke();
+    ctx.save();ctx.translate(c,c);ctx.rotate(start+a/2);ctx.fillStyle="#fff";ctx.font="700 28px DM Sans,sans-serif";ctx.textAlign="right";ctx.textBaseline="middle";
+    ctx.fillText(prize.length>18?prize.slice(0,17)+"…":prize,r-28,0);ctx.restore();
+  });
+  ctx.beginPath();ctx.arc(c,c,44,0,Math.PI*2);ctx.fillStyle="#8c0f33";ctx.fill();ctx.strokeStyle="#fff";ctx.lineWidth=6;ctx.stroke();
+  ctx.fillStyle="#fff";ctx.font="36px sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText("♥",c,c+2);
+  canvas.style.transition="none";canvas.style.transform=`rotate(${wheelRotation}deg)`;
+}
+
+function spinWheel(){
+  if(wheelSpinning)return;wheelSpinning=true;document.getElementById("spinWheel").disabled=true;
+  const prizes=state.wheel,count=prizes.length,winner=Math.floor(Math.random()*count),segment=360/count,target=(winner+.5)*segment+(Math.random()-.5)*segment*.6;
+  const current=(wheelRotation%360+360)%360,rotation=(360-target-current+720)%360+360*6;
+  const canvas=document.getElementById("giftWheel");canvas.getBoundingClientRect();canvas.style.transition="";wheelRotation+=rotation;canvas.style.transform=`rotate(${wheelRotation}deg)`;
+  setTimeout(()=>{wheelSpinning=false;document.getElementById("spinWheel").disabled=false;document.getElementById("resultTitle").textContent=prizes[winner];document.getElementById("resultModal").classList.add("show")},4300);
+}
+
+function initializeScratchCard(){
+  const box=document.getElementById("scratchCard"),canvas=document.getElementById("scratchCanvas");if(!box||!canvas)return;
+  const width=box.clientWidth,height=box.clientHeight,ratio=devicePixelRatio||1;canvas.width=width*ratio;canvas.height=height*ratio;
+  const ctx=canvas.getContext("2d");ctx.scale(ratio,ratio);
+  const g=ctx.createLinearGradient(0,0,width,height);g.addColorStop(0,"#d98aa3");g.addColorStop(.5,"#b85775");g.addColorStop(1,"#cf7690");ctx.fillStyle=g;ctx.fillRect(0,0,width,height);
+  ctx.fillStyle="rgba(255,255,255,.3)";ctx.font="22px sans-serif";ctx.textAlign="center";
+  for(let x=20;x<width;x+=48)for(let y=24;y<height;y+=48)ctx.fillText("♥",x,y);
+  ctx.strokeStyle="rgba(255,255,255,.7)";ctx.setLineDash([8,6]);ctx.lineWidth=2;ctx.strokeRect(12,12,width-24,height-24);ctx.setLineDash([]);
+  ctx.fillStyle="#fff";ctx.font="700 22px DM Sans,sans-serif";ctx.fillText("Scratch here ✨",width/2,height/2);
+  ctx.globalCompositeOperation="destination-out";let drawing=false,points=0,completed=false;
+  const pos=e=>{const b=canvas.getBoundingClientRect(),t=e.touches?e.touches[0]:e;return[t.clientX-b.left,t.clientY-b.top]};
+  const scratch=e=>{
+    if(!drawing||completed)return;e.preventDefault();const[x,y]=pos(e);ctx.beginPath();ctx.arc(x,y,26,0,Math.PI*2);ctx.fill();points++;
+    if(points%8!==0)return;const p=ctx.getImageData(0,0,canvas.width,canvas.height).data;let transparent=0,total=0;
+    for(let i=3;i<p.length;i+=64){total++;if(p[i]<20)transparent++}
+    if(transparent/total>.5){completed=true;canvas.style.opacity="0";canvas.style.pointerEvents="none";document.getElementById("scratchMessage").textContent="You found it 💖"}
+  };
+  canvas.onpointerdown=e=>{drawing=true;canvas.setPointerCapture(e.pointerId);scratch(e)};
+  canvas.onpointermove=scratch;canvas.onpointerup=canvas.onpointercancel=()=>drawing=false;canvas.ontouchmove=e=>e.preventDefault();
+}
+
+document.getElementById("closeLetter").onclick=()=>document.getElementById("letterModal").classList.remove("show");
+document.getElementById("closeResult").onclick=()=>document.getElementById("resultModal").classList.remove("show");
+
+setInterval(()=>{
+  const heart=document.createElement("div");heart.className="heart";heart.textContent="💗";
+  heart.style.left=Math.random()*100+"vw";heart.style.fontSize=14+Math.random()*18+"px";heart.style.animationDuration=7+Math.random()*6+"s";
+  document.body.appendChild(heart);setTimeout(()=>heart.remove(),13000);
+},1400);
+
+renderPage();
+</script>
+</body>
+</html>
